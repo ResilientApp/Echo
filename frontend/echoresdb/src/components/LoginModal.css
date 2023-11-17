@@ -1,0 +1,55 @@
+.login-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 10; /* Above other content */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4); /* Semi-transparent background */
+}
+
+.login-modal-content {
+  width: 20em;
+  background-color: #fff;
+  padding: 70px;
+  border-radius: 10px; /* Rounded corners for the modal */
+}
+
+.login-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
+.login-google-btn {
+  margin-left: 2.5em;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  border-color: black;
+  cursor: pointer;
+  padding: 20px 30px;
+  border-radius: 10px; /* Slightly rounded corners for the button */
+  font-size: 16px; /* Adjust as needed */
+}
+
+.google-icon {
+  margin-left: 20px;
+  font-size: 30px;
+  
+  /* Adjust size as needed, Font Awesome icons scale with font-size */
+}
+
+/* ... other styles ... */
+
+/* Adjust any of the above values to match your design requirements */
