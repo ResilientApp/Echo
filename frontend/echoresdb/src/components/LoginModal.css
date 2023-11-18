@@ -51,14 +51,14 @@
 }
 
 .login-modal-close {
-  position: fixed;
-  top: 12.3em;
-  left: 17.5em;
   background: none;
   border: none;
-  color: #aaa;
   font-size: 1.5rem;
   cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
 }
 
 .login-modal-close:hover,
