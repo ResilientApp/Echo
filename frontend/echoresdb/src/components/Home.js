@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import ContactModal from './ContactModal';
 import LoginModal from './LoginModal';
+import { useAuthContext } from '../hooks/useAuthContext';
+
 
 
 const Home = () => {
+  const { dispatch } = useAuthContext();
+  useEffect(() => {
+    const fetchUser = async () => {
+      console.log("fetching user");
+
+
+      const response = await fetch("http://localhost:4000/auth/googleUser", {
+        credentials: 'include',
+        mode: 'cors'
+      });
+
+      console.log("fetched user:");
+
+  
+      const json = await response.json();
+      console.log(json);
+  
+      if (response.ok) {
+        dispatch({ type: "LOGIN", payload: json })
+      }
+    };
+  
+    fetchUser();
+  }, [dispatch]);
     const [showContactModal, setShowContactModal] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
   
