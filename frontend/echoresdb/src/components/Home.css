@@ -238,7 +238,7 @@
     background-color: #000; /* Black background */
     color: #fff; /* White text */
     border: 2px solid #fff; /* White border */
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin-right: 10px; /* Adds margin to the right of the contact button */
     border-radius: 4px;
     cursor: pointer;

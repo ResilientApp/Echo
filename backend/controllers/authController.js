@@ -29,6 +29,7 @@ passport.use(new GoogleStrategy({
         user = new User({
           email: profile.email,
           name: profile.given_name,
+          picture: profile.picture,
           id: profile.id,
           public: "publicplaceholder",
           privatge: "privateplaceholder"

@@ -1,6 +1,8 @@
 import React from 'react';
 import './Ledger.css';
 import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
+
 
 
 var photo_url = "/profile.jpg"
@@ -14,6 +16,8 @@ var verification_platform2 = "Uber"
 var verification_time2 = "Friday, 17-Nov-23 21:05:12 UTC"
 
 const Ledger = () =>{
+  const { user } = useAuthContext();
+
     const { logout } = useLogout()
     const handleLogout = () => {
         logout()
@@ -26,15 +30,15 @@ const Ledger = () =>{
       <header className="App-header">
           <div className="logo"><span style={{color: "#82A5FF"}}>E</span>cho</div>
           <div className="header-buttons">
-          <button className='profile-button' onClick={handleProfileClick}>Profile</button>
-            <button className='logout-button' onClick={handleLogout}>Logout</button>
+          <button className='contact-button' onClick={handleProfileClick}>Profile</button>
+            <button className='login-button' onClick={handleLogout}>Logout</button>
           </div>
       </header>
       <main className="App-main">
         <div className='profile'>
-          <img src={photo_url} alt="profile picture" className='profile-picture'></img>
+          <img src={user.picture} alt="profile picture" className='profile-picture'></img>
           <div>
-          <h2>Hi, {user_name}</h2>
+          <h2>Hi, {user.name}</h2>
           <p>You verified <span style={{color:"rgba(130, 165, 255, 1)"}}>{times_verified}</span> times for <span style={{color:"rgba(130, 165, 255, 1)"}}>{verified_companies}</span> companies.</p>
           </div>
         </div>

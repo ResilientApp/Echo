@@ -23,7 +23,11 @@ const personSchema = new Schema({
   },
   private: { // end coords
     type: String, // Array of numbers
-  }
+  },
+  picture: {
+    type: String,
+    required: true
+  },
 });
 
 // Custom validation function to ensure only two numbers are in the array
