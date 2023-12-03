@@ -12,14 +12,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mongoose": "^7.3.2",
+    "node-fetch": "^3.3.2",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
-    "passport-google-oauth2": "^0.2.0"
+    "passport-google-oauth2": "^0.2.0",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9"
   }
 }

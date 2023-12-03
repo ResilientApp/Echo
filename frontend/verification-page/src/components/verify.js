@@ -15,12 +15,13 @@ const Rectangle = () => {
 }
 
 const Google = () => {
-  
-  const { dispatch } = useAuthContext();
+
+  const { user,dispatch } = useAuthContext();
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const [stream, setStream] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
+  
 const { logout } = useLogout()
     const handleLogout = () => {
         logout()
@@ -112,12 +113,36 @@ const { logout } = useLogout()
         setShowLoginModal(false);
       }
     };
-    const handleSubmit = () => {
-      // Implement submission logic here
+    
+    const handleSubmit = async () => {
+      console.log("name", user.name)
       console.log('Submit this image:', capturedImage);
-      // You might want to navigate to another page after submission
-      // navigate('/some-path');
+      const parts = capturedImage.split(',');
+      var Image = parts[1]
+      const response = await fetch("http://localhost:4000/api/data/face", {
+        method: "POST",
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.name,
+          image: Image
+      })
+      });
+
+      console.log("fetched user:");
+
+  
+      const json = await response.json();
+      console.log(json);
+  
+    
+      
     };
+    
+    
     return (
       <div className="App">
       <main className="App-main">

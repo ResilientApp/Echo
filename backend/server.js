@@ -7,6 +7,7 @@ const mongoose = require("mongoose")
 const personRoutes = require("./routes/person")
 const authRoutes = require("./routes/auth")
 const dataRoutes = require("./routes/data")
+const bodyParser = require('body-parser');
 
 const session = require('express-session');
 const passport = require("passport");
@@ -15,7 +16,11 @@ const cors = require('cors');
 
 // express app
 const app = express()
+app.use(bodyParser.json({ limit: '50mb' }));
 
+// If you are also parsing URL-encoded bodies (like form data)
+// you may want to increase the limit for this as well
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // middleware
 app.use(express.json()) // to get req body
 
