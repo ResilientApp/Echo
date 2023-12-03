@@ -7,14 +7,13 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useLogout } from "../hooks/useLogout";
 
 
-
 const Rectangle = () => {
   return (
     <div className="rectangle"></div>
   );
 }
 
-const Google = () => {
+const Verify= () => {
 
   const { user,dispatch } = useAuthContext();
   const navigate = useNavigate();
@@ -129,18 +128,25 @@ const { logout } = useLogout()
         body: JSON.stringify({
           username: user.name,
           image: Image
-      })
+        })
       });
-
+    
       console.log("fetched user:");
-
-  
+    
       const json = await response.json();
       console.log(json);
-  
     
-      
+      // Extracting face match result
+      const faceMatchResult = json.matchedFaces[0].matchResult;
+    
+      // Conditional routing based on face match result
+      if (faceMatchResult === 1) {
+        navigate('../verified'); // Redirect to verified.js if match is found
+      } else {
+        navigate('../failed'); // Redirect to failed.js if no match is found
+      }
     };
+    
     
     
     return (
@@ -184,4 +190,4 @@ const { logout } = useLogout()
   
 }
 
-export default Google;
+export default Verify;

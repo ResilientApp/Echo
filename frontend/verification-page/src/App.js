@@ -3,7 +3,9 @@ import { useAuthContext } from "./hooks/useAuthContext"
 
 // pages & components
 import Home from "./components/google"
-import Ledger from "./components/verify";
+import Verify from "./components/verify";
+import Verified from "./components/verified"; // Assuming this is your verified component
+import Failed from "./components/failed"; 
 
 
 function App() {
@@ -19,13 +21,22 @@ function App() {
           <Routes>
             <Route
             path="/"
-            element = {!user ? <Home/> : <Navigate to= "/ledger" />}
+            element = {!user ? <Home/> : <Navigate to= "/verify" />}
             />
             <Route
-            path="/ledger"
-            element = {user ? <Ledger/> :  <Navigate to= "/" />}
+            path="/verify"
+            element = {user ? <Verify/> :  <Navigate to= "/" />}
             />
-          </Routes>
+          
+          <Route
+              path="/verified"
+              element={<Verified />} // Render Verified component
+            />
+            <Route
+              path="/failed"
+              element={<Failed />} // Render Failed component
+            />
+            </Routes>
         </div>
       </BrowserRouter>
     </div>
