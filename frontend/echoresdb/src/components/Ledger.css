@@ -68,62 +68,76 @@
     background-color: #0056b3; /* Darker shade for hover state */
   }
   
-  .profile {
-    background-color: transparent;
-    position: relative;
-    align-content:top;
-    text-align: top;
-    align-self:flex-start;
-    display: flex;
-    flex: 1;
-    margin-left: 5%;
-    margin-top: 5%;
-  }
-  
-  .ledger {
-    background-color: transparent;
-    position: relative;
-    align-content:top;
-    text-align: left;
-    align-self:flex-start;
-    display: flex;
-    flex: 0;
-    margin-left: 5%;
-  }
+  .profile-and-ledger-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  overflow-y: auto; /* Add this line to enable vertical scrolling */
+
+}
+
+.profile {
+  background-color: transparent;
+  display: flex;
+  width: 90%; /* Adjust width as needed */
+  /* Remove margin-top and margin-left if not needed */
+}
+
+.ledger {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0;
+  overflow-y: auto; /* Add this line to enable vertical scrolling */
+
+}
+
   
   .verification {
     background-color: black;
     border: 1px solid #fff;
-    position: relative;
     width: 90%;
     height: 140px;
-    display: grid;
-    align-self:auto;
-    margin-top: 0px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
     margin-bottom: 10px;
-    text-align: center;
-    align-content: center;
+    position: top;
+
   }
+  
+  .verification-icon {
+    font-size: 40px; /* Adjust icon size */
+    margin-right: 20px;
+  }
+  
+  .verification-text {
+    align-items: left;
+    text-align: center;  
+    margin-left: 60px;
+  }
+  
   
   .icon {
     background-color: rgba(130, 165, 255, 1);
     border: none;
     border-radius: 10px;
-    position: absolute;
+    position: left;
     width: 70px;
     height: 70px;
     display: flex;
     margin-top: 0px;
-    align-self: center;
-    margin-left: 40px;
+    margin-left: 30px;
     
   }
   
   .profile-picture {
     border: none;
     border-radius: 500px;
-    width: 40%;
-    height: 40%;
+    width: 10%;
+    height: 10%;
   }
   .contact-button {
     background-color: #000; /* Black background */

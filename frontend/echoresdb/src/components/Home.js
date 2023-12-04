@@ -67,7 +67,7 @@ const Home = () => {
           </section>
           <section className="verification-section">
           <div className="images-container">
-              <img src="/frameuber.png" alt="Phone" className="phone-image"/>
+              <img src="/Frameuber.png" alt="Phone" className="phone-image"/>
               <img src="/ledger.png" alt="Recent Verification" className="recent-verification-image"/>
             </div>
           </section>

@@ -31,8 +31,9 @@ passport.use(new GoogleStrategy({
           name: profile.given_name,
           picture: profile.picture,
           id: profile.id,
-          public: "publicplaceholder",
-          privatge: "privateplaceholder"
+          public: "placeholder",
+          private: "placeholder",
+          transactions: []
         });
 
 

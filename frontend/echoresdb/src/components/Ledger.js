@@ -1,21 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './Ledger.css';
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUber } from '@fortawesome/free-brands-svg-icons'; 
 
 
 
-var photo_url = "/profile.jpg"
-var user_name = "FirstName LastName"
-var times_verified = 1
-var verified_companies = 1
-
-var verification_platform = "Uber"
-var verification_time = "Thursday, 16-Nov-23 19:05:12 UTC"
-var verification_platform2 = "Uber"
-var verification_time2 = "Friday, 17-Nov-23 21:05:12 UTC"
 
 const Ledger = () =>{
+  const [transactions, setTransactions] = useState([]);
+  const [timesVerified, setTimesVerified] = useState(0);
+  const [verifiedCompanies, setVerifiedCompanies] = useState(0);
+  
   const { user } = useAuthContext();
 
     const { logout } = useLogout()
@@ -25,6 +22,36 @@ const Ledger = () =>{
     const handleProfileClick = () => {
         window.scrollTo(0, 0);
       };
+      useEffect(() => {
+        const pull = async () => {
+          const response = await fetch("http://localhost:5000/retrieve", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              transactions: user.transactions
+            }),
+          });
+    
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Fetched data:", data);
+            setTransactions(data); // Store the fetched transactions
+    
+            // Update timesVerified and verifiedCompanies
+            setTimesVerified(data.length);
+            const uniqueServices = new Set(data.map(item => item.asset.data.service));
+            setVerifiedCompanies(uniqueServices.size);
+          } else {
+            console.error("Error fetching data:", response.statusText);
+          }
+        };
+    
+        pull();
+      }, [user.transactions]); // Dependency array
+    
+    ;
   return (
     <div className="App">
       <header className="App-header">
@@ -39,47 +66,22 @@ const Ledger = () =>{
           <img src={user.picture} alt="profile picture" className='profile-picture'></img>
           <div>
           <h2>Hi, {user.name}</h2>
-          <p>You verified <span style={{color:"rgba(130, 165, 255, 1)"}}>{times_verified}</span> times for <span style={{color:"rgba(130, 165, 255, 1)"}}>{verified_companies}</span> companies.</p>
+          <p>You verified <span style={{color:"rgba(130, 165, 255, 1)"}}>{timesVerified}</span> times for <span style={{color:"rgba(130, 165, 255, 1)"}}>{verifiedCompanies}</span> companies.</p>
           </div>
         </div>
         <div className='ledger'>
           <h4>My Verifications</h4>
-        </div>
-        <div className='verification'>
-          <div className='icon'>
-            <img src={'/' + verification_platform + 'Icon.png'} style={{width:'90%',height:'90%',alignSelf:'center',margin:'auto'}}></img>
-          </div>
-          <p>
-            Platform: {verification_platform}<br/>
-            Time: {verification_time}
-          </p>
-        </div>
-        <div className='verification'>
-          <div className='icon'>
-            <img src={'/' + verification_platform2 + 'Icon.png'} style={{width:'90%',height:'90%',alignSelf:'center',margin:'auto'}}></img>
-          </div>
-          <p>
-            Platform: {verification_platform2}<br/>
-            Time: {verification_time2}
-          </p>
-        </div>
-        <div className='verification'>
-          <div className='icon'>
-            <img src={'/' + verification_platform2 + 'Icon.png'} style={{width:'90%',height:'90%',alignSelf:'center',margin:'auto'}}></img>
-          </div>
-          <p>
-            Platform: {verification_platform2}<br/>
-            Time: {verification_time2}
-          </p>
-        </div>
-        <div className='verification'>
-          <div className='icon'>
-            <img src={'/' + verification_platform2 + 'Icon.png'} style={{width:'90%',height:'90%',alignSelf:'center',margin:'auto'}}></img>
-          </div>
-          <p>
-            Platform: {verification_platform2}<br/>
-            Time: {verification_time2}
-          </p>
+          {transactions.map((transaction, index) => (
+            <div className='verification' key={index}>
+              <FontAwesomeIcon icon={faUber} className="icon" />
+              <div className="verification-text">
+                <p>
+                  Platform: {transaction.asset.data.service}<space>    </space>
+                  Time: {new Date(transaction.asset.data.start_time).toLocaleString()}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
     </div>

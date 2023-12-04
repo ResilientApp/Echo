@@ -70,8 +70,8 @@
   
   .phone-image {
     position: absolute;
-    top: 15em; /* Adjust these values to position your image */
-    left: 60em; /* Adjust these values to position your image */
+    top: 17em; /* Adjust these values to position your image */
+    left: 80em; /* Adjust these values to position your image */
     width: 425px; /* Adjust based on actual image size */
     height: 856px; /* Maintain aspect ratio */
     z-index: 3; /* Ensures this image lays on top of the other */
@@ -79,9 +79,9 @@
   
   .recent-verification-image {
     position: absolute;
-    top: 28em; /* Adjust these values to position your image */
+    top: 33em; /* Adjust these values to position your image */
     left: 5em; /* Adjust these values to position your image */
-    width: 70em; /* Adjust based on actual image size */
+    width: 90em; /* Adjust based on actual image size */
     height: auto; /* Maintain aspect ratio */
     z-index: 2; /* Ensures this image is below the phone image */
   }
@@ -104,7 +104,7 @@
     font-size: 20px; /* Adjust this to match the second picture if needed */
     width: 45em; /* You might need to adjust the width as well */
     text-align: left;
-    margin-left: 3em;
+    margin-left: 4em;
     text-align: left;
 
 
@@ -148,7 +148,7 @@
   /* ... other styles ... */
   
   .our-team-section {
-    top: 50em;
+    top: 55em;
     text-align: center;
     margin: 20px;
     position: relative;
@@ -207,7 +207,7 @@
   
   .highlighted-text {
     color: #82A5FF; /* Replace with the color you want */
-    font-size: 80px;
+    font-size: 100px;
     text-align: left;
   }
   
@@ -264,7 +264,7 @@
   
   /* Styles for the about section */
   .about-section h1 {
-    font-size: 60px;
+    font-size: 75px;
     text-align: left;
 
   }

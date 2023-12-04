@@ -114,10 +114,47 @@ const { logout } = useLogout()
     };
     
     const handleSubmit = async () => {
-      console.log("name", user.name)
+      console.log("name", user.name);
       console.log('Submit this image:', capturedImage);
       const parts = capturedImage.split(',');
-      var Image = parts[1]
+      const Image = parts[1];
+      
+      // Check if the data is 'placeholder'
+      if (user.public === 'placeholder' && user.private === 'placeholder') {
+        // Fetch the keys from the server
+        const keyResponse = await fetch("http://localhost:5000/create_key");
+        
+        const keys = await keyResponse.json();
+        console.log("key", keys)
+        // Update the user object with the received keys
+        const new_public = keys.public;
+        const new_private = keys.private;
+        user.public=keys.public;
+        user.private = keys.private;
+        console.log("JSON",keys.public, keys.private)
+        console.log("After Defined",new_public, new_private)
+        const response1 = await fetch(`http://localhost:4000/api/person/${user._id}`, {
+        method: "PATCH",
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          public : new_public,
+          private : new_private
+        })
+      });
+      if (response1.ok) {
+        console.log("NEW",new_public, new_private)
+        console.log("OK",user.public, user.private)
+        const updated = await response1.json();
+        dispatch({ type: "LOGIN", payload: updated })
+      }
+
+      
+      }
+    
       const response = await fetch("http://localhost:4000/api/data/face", {
         method: "POST",
         credentials: 'include',
@@ -126,7 +163,7 @@ const { logout } = useLogout()
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: user.name,
+          username: user.id,
           image: Image
         })
       });
@@ -142,10 +179,42 @@ const { logout } = useLogout()
       // Conditional routing based on face match result
       if (faceMatchResult === 1) {
         navigate('../verified'); // Redirect to verified.js if match is found
+        //mint_nft
+        console.log("mintingnft")
+        const tokenResponse = await fetch("http://localhost:5000/create_token" , {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          service: "Uber",
+          user_public_key: user.public
+        })
+      });
+      
+      const data = await tokenResponse.json();
+      console.log("Message:", data.message);
+      console.log("Transaction ID:", data.transaction_id);
+      const updatetrans = await fetch(`http://localhost:4000/api/person/${user._id}`, {
+        method: "PATCH",
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          transactions: user.transactions.concat(data.transaction_id)
+        })
+      });
+      if (updatetrans.ok) {
+        const updated = await updatetrans.json();
+        dispatch({ type: "LOGIN", payload: updated })
+      }
       } else {
         navigate('../failed'); // Redirect to failed.js if no match is found
       }
     };
+    
     
     
     

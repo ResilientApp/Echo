@@ -28,6 +28,9 @@ const personSchema = new Schema({
     type: String,
     required: true
   },
+  transactions: {
+    type: Array,
+  }
 });
 
 // Custom validation function to ensure only two numbers are in the array
