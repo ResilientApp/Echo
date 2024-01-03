@@ -1,10 +1,36 @@
 require("dotenv").config()
 const bodyParser = require('body-parser');
 
+const AWS = require('aws-sdk');
+
+// Configure the AWS region and credentials
+AWS.config.update({
+  region: process.env.AWS_REGION, // Change to your bucket's region
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
 var request = require('request');
 var rp = require('request-promise-native'); // Corrected import
 const _apiUrl = 'https://faceapi.mxface.ai/api/v3/face/';
 const _subscriptionKey = process.env.SUBSCRIPTION_KEY;//change subscription key / Key entered for Zachary Willson's account
+
+const s3 = new AWS.S3();
+
+async function getSignedUrl(bucketName, objectKey) {
+  try {
+    const url = s3.getSignedUrl('getObject', {
+      Bucket: bucketName,
+      Key: objectKey,
+      Expires: 60 * 5, // URL expires in 5 minutes
+    });
+    console.log(url)
+    return url;
+  } catch (error) {
+    console.error('Error generating signed URL:', error);
+    return null;
+  }
+}
 
 async function base64EncodeFromUrl(url) {
   try {
@@ -12,6 +38,7 @@ async function base64EncodeFromUrl(url) {
       url: url,
       encoding: null
     });
+    console.log(imageBuffer.toString('base64'))
     return imageBuffer.toString('base64');
   } catch (error) {
     console.error('Error downloading or encoding image:', error);
@@ -72,26 +99,18 @@ function sendRequest(api, encodedImage) {
   });
 }
 
-
-
-
-
-
-
-
-
-
-
-
 const face = async (req, res) => {
 
   const { username, image } = req.body;
-  console.log(req)
-  console.log(username)
-  console.log("image",image)
-  var base64SingleFace = await image;
-  var base64MultipleFace = await base64EncodeFromUrl(`https://ucdavis189fecho.s3.us-west-1.amazonaws.com/${username}.jpg`);
-  
+  console.log("image", image);
+  console.log("username",username)
+  const userImageKey = `${username}`; // Adjust as needed based on how you store user images
+  console.log("USERIMAGEKEY", userImageKey)
+  const signedUrl = await getSignedUrl('echo-be', userImageKey); // Replace 'echo-be' with your actual bucket name
+
+  const base64SingleFace = image; // The image from the client
+  const base64MultipleFace = await base64EncodeFromUrl(signedUrl); // Fetch and encode the image from S3
+
   sendRequest("detect", base64MultipleFace)
   //console.log("detected")
   sendRequest("analytics", base64SingleFace)

@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json()) // to get req body
 
 app.use(cors({
-  origin: `${process.env.REACT_APP_SERVER_ADD}`,
+  origin: `${process.env.REACT_APP_SERVER_APP}`,
   credentials: true
 }));
 

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.895.0",
     "body-parser": "^1.20.2",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
@@ -20,6 +21,8 @@
     "express-session": "^1.17.3",
     "latest": "^0.2.0",
     "mongoose": "^7.3.2",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "n": "^9.2.0",
     "node-fetch": "^3.3.2",
     "nodemon": "^2.0.22",
