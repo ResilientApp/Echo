@@ -8,7 +8,7 @@ export const useLogout =  () => {
   const logout = async () => {
 
     dispatch({type: "LOGOUT"})
-    window.location.href = "http://localhost:4000/auth/logout";
+    window.location.href = `${process.env.REACT_APP_SERVER_ADD}/auth/logout`;
 
   }
 

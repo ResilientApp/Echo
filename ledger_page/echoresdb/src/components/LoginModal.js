@@ -13,7 +13,7 @@ const LoginModal = ({ close }) => {
   const { dispatch } = useAuthContext();
 
   const handleButtonClick = () => {
-    window.location.href = "http://localhost:4000/auth";
+    window.location.href = `${process.env.REACT_APP_SERVER_ADD}/auth`;
   };
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const LoginModal = ({ close }) => {
       console.log("fetching user");
 
 
-      const response = await fetch("http://localhost:4000/auth/googleUser", {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADD}/auth/googleUser1`, {
         credentials: 'include',
         mode: 'cors'
       });

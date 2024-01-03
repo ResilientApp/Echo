@@ -31,7 +31,7 @@ const { logout } = useLogout()
       console.log("fetching user");
 
 
-      const response = await fetch("http://localhost:4000/auth/googleUser", {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADD}/auth/googleUser`, {
         credentials: 'include',
         mode: 'cors'
       });
@@ -133,7 +133,7 @@ const { logout } = useLogout()
         user.private = keys.private;
         console.log("JSON",keys.public, keys.private)
         console.log("After Defined",new_public, new_private)
-        const response1 = await fetch(`http://localhost:4000/api/person/${user._id}`, {
+        const response1 = await fetch(`${process.env.REACT_APP_SERVER_ADD}/api/person/${user._id}`, {
         method: "PATCH",
         credentials: 'include',
         mode: 'cors',
@@ -155,7 +155,8 @@ const { logout } = useLogout()
       
       }
     
-      const response = await fetch("http://localhost:4000/api/data/face", {
+      console.log("id:", user._id)
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADD}/api/data/face`, {
         method: "POST",
         credentials: 'include',
         mode: 'cors',
@@ -163,7 +164,7 @@ const { logout } = useLogout()
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: user.id,
+          username: user._id,
           image: Image
         })
       });
@@ -195,7 +196,7 @@ const { logout } = useLogout()
       const data = await tokenResponse.json();
       console.log("Message:", data.message);
       console.log("Transaction ID:", data.transaction_id);
-      const updatetrans = await fetch(`http://localhost:4000/api/person/${user._id}`, {
+      const updatetrans = await fetch(`${process.env.REACT_APP_SERVER_ADD}/api/person/${user._id}`, {
         method: "PATCH",
         credentials: 'include',
         mode: 'cors',

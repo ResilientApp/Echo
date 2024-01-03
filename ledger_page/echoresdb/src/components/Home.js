@@ -13,7 +13,7 @@ const Home = () => {
       console.log("fetching user");
 
 
-      const response = await fetch("http://localhost:4000/auth/googleUser", {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADD}/auth/googleUser`, {
         credentials: 'include',
         mode: 'cors'
       });

@@ -7,6 +7,8 @@ const mongoose = require("mongoose")
 const personRoutes = require("./routes/person")
 const authRoutes = require("./routes/auth")
 const dataRoutes = require("./routes/data")
+const uploadRoute = require("./routes/s3");
+
 const bodyParser = require('body-parser');
 
 const session = require('express-session');
@@ -25,7 +27,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json()) // to get req body
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: `${process.env.REACT_APP_SERVER_ADD}`,
   credentials: true
 }));
 
@@ -46,10 +48,15 @@ app.use((req, res, next) => {
   next()
 })
 
+
+
+
 //routes
 app.use("/auth", authRoutes)
 app.use("/api/person", personRoutes)
 app.use("/api/data", dataRoutes)
+app.use("/upload", uploadRoute);
+
 
 
 
